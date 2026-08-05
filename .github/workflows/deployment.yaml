@@ -1,0 +1,37 @@
+name: artifact_demo
+on:
+  push:
+    branches:
+      - main
+      - qa
+      - prod
+#     paths:
+#     - 'src/**'
+#   pull_request:
+#     branches:
+#       - main
+#       - qa
+#       - prod
+#   workflow_dispatch:
+#   schedule:
+#       - cron: '0 0 * * *' # Runs every day at midnight
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: get code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: lint code
+        run: npm run lint    #its like terraform validate where it checks the code for errors or identation issues and bad practices
+        
+  
