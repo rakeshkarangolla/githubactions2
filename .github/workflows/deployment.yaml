@@ -54,8 +54,7 @@ jobs:
         run: npm run build   #its like terraform plan where it builds the code and creates the artifacts for deployment
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: frontend-artifact
           path: dist/ #the artifact has created in this location and from here it will take and stores in the github actions server and then we can download it in the next job for deployment
-          
