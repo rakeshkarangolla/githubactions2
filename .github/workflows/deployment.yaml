@@ -58,3 +58,15 @@ jobs:
         with:
           name: frontend-artifact
           path: dist/ #the artifact has created in this location and from here it will take and stores in the github actions server and then we can download it in the next job for deployment
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download artifact #inserting the artifact in the deployment job so that we can deploy it to the server
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-artifact
+      - name: listing the files
+        run: ls -ll
+      - name: deploy
+        run: echo "Deploying the application..." #this is where we will deploy the application to the server
