@@ -26,7 +26,7 @@ jobs:
         uses: actions/setup-node@v3
 
         with:
-          node-version: '16'
+          node-version: '20' # Specify the Node.js version you want to use
 
       - name: Install dependencies
         run: npm ci
@@ -34,4 +34,28 @@ jobs:
       - name: lint code
         run: npm run lint    #its like terraform validate where it checks the code for errors or identation issues and bad practices
         
-  
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: get code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+
+        with:
+          node-version: '20' # Specify the Node.js version you want to use
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: build code
+        run: npm run build   #its like terraform plan where it builds the code and creates the artifacts for deployment
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend-artifact
+          path: dist/ #the artifact has created in this location and from here it will take and stores in the github actions server and then we can download it in the next job for deployment
+          
